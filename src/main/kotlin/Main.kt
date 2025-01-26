@@ -1,9 +1,7 @@
-package ru.netology
-
 val cardType = "Visa"
 val transactionsPerMonth: Int = 0
 val transactionsPerDay: Int = 0
-val currentTransaction: Int = 150_000
+val currentTransaction: Int = 4_000
 
 fun masterCardFee(currentTransaction: Int, transactionsPerMonth: Int): Int {
 
@@ -40,7 +38,7 @@ fun taxFee(
 
     var fee: Int
     if (cardType == "VK Pay"){
-        if (transactionsPerMonth + currentTransaction >= 40_000 || currentTransaction >= 15_000){
+        if (transactionsPerMonth + currentTransaction > 40_000 || currentTransaction > 15_000){
             println("Превышение лимитов транзакций. Транзакция заблокирована.")
             return 0
         }
@@ -54,7 +52,7 @@ fun taxFee(
         } else {
             when {
                 cardType == "Mastercard" || cardType == "Maestro" -> fee = masterCardFee(currentTransaction, transactionsPerMonth)
-                cardType == "Visa" -> fee = visaFee(currentTransaction)
+                cardType == "Visa" || cardType == "Мир" -> fee = visaFee(currentTransaction)
                 else -> fee = 0
             }
         }
