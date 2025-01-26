@@ -1,16 +1,70 @@
 package ru.netology
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, " + name + "!")
+val cardType = "Visa"
+val transactionsPerMonth: Int = 0
+val transactionsPerDay: Int = 0
+val currentTransaction: Int = 150_000
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
+fun masterCardFee(currentTransaction: Int, transactionsPerMonth: Int): Int {
+
+    val taxMultiplier = 0.006
+    val taxAddition = 20
+    val totalTransaction: Int = currentTransaction + transactionsPerMonth
+    var totalFee: Int
+
+    if (transactionsPerMonth < 300 && transactionsPerMonth > 75_000) {
+        totalFee = (currentTransaction * taxMultiplier + taxAddition).toInt()
+    } else if (totalTransaction > 75_000) {
+        totalFee = ((totalTransaction - 75_000) * taxMultiplier + taxAddition).toInt()
+    } else {
+        totalFee = 0
     }
+
+    return totalFee
+}
+
+fun visaFee(currentTransaction: Int): Int {
+
+    val tax = 0.0075
+    val min_tax = 35
+
+    return if ((currentTransaction * tax) < 35) min_tax else (currentTransaction * tax).toInt()
+}
+
+fun taxFee(
+    cardType: String = "Мир",
+    transactionsPerMonth: Int = 0,
+    transactionPerDay: Int = 0,
+    currentTransaction: Int
+            ): Int {
+
+    var fee: Int
+    if (cardType == "VK Pay"){
+        if (transactionsPerMonth + currentTransaction >= 40_000 || currentTransaction >= 15_000){
+            println("Превышение лимитов транзакций. Транзакция заблокирована.")
+            return 0
+        }
+        else {
+            return 0
+        }
+    } else {
+        if (transactionsPerMonth + currentTransaction > 600_000 || transactionPerDay + currentTransaction > 150_000) {
+            println("Превышение лимитов транзакций. Транзакция заблокирована.")
+            return 0
+        } else {
+            when {
+                cardType == "Mastercard" || cardType == "Maestro" -> fee = masterCardFee(currentTransaction, transactionsPerMonth)
+                cardType == "Visa" -> fee = visaFee(currentTransaction)
+                else -> fee = 0
+            }
+        }
+        return fee
+    }
+
+}
+
+fun main() {
+
+    println("Размер комисии " + taxFee(cardType, transactionsPerMonth, transactionsPerDay, currentTransaction))
+
 }
