@@ -264,4 +264,21 @@ class MainKtTest {
 
         assertEquals(0, result)
     }
+
+    @Test
+    fun taxFee_MasterCardLessThen300() {
+        val cardType = "Mastercard"
+        val transactionsPerMonth: Int = 0
+        val transactionsPerDay: Int = 0
+        val currentTransaction: Int = 299
+
+        val result = taxFee(
+            cardType,
+            transactionsPerMonth,
+            transactionsPerDay,
+            currentTransaction
+        )
+
+        assertEquals(21, result)
+    }
 }

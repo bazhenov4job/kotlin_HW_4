@@ -1,7 +1,7 @@
-val cardType = "Visa"
+val cardType = "Mastercard"
 val transactionsPerMonth: Int = 0
 val transactionsPerDay: Int = 0
-val currentTransaction: Int = 4_000
+val currentTransaction: Int = 299
 
 fun masterCardFee(currentTransaction: Int, transactionsPerMonth: Int): Int {
 
@@ -14,6 +14,8 @@ fun masterCardFee(currentTransaction: Int, transactionsPerMonth: Int): Int {
         totalFee = (currentTransaction * taxMultiplier + taxAddition).toInt()
     } else if (totalTransaction > 75_000) {
         totalFee = ((totalTransaction - 75_000) * taxMultiplier + taxAddition).toInt()
+    } else if (totalTransaction < 300) {
+        totalFee = (totalTransaction * taxMultiplier + taxAddition).toInt()
     } else {
         totalFee = 0
     }
