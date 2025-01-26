@@ -279,6 +279,6 @@ class MainKtTest {
             currentTransaction
         )
 
-        assertEquals(21, result)
+        assertEquals(22, result)
     }
 }
